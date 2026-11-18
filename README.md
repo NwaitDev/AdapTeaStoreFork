@@ -65,8 +65,11 @@ Run these from the root of the experimentation-platform repository (i.e. here, w
 docker compose -f samples/adaptable-teastore-image/docker-compose.yml up -d
 # Check that the containers are running
 docker compose -f samples/adaptable-teastore-image/docker-compose.yml ps
+# Turn off the containers
+docker compose -f samples/adaptable-teastore-image/docker-compose.yml down
 ```
 
 The first up -d downloads the images, so it can take a few minutes. After that, the services need about a minute to register with each other.
 
 Then, you can run the JavaBip controller (TODO: Update the rest of this readme)
+
