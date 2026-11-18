@@ -50,4 +50,23 @@ python3 src/main/java/javabipteastore/plotMultiple.py \
 
 ### Adapteastore
 
-TODO
+Start your docker deamon:
+
+```bash
+sudo systemctl start docker
+sudo systemctl enable docker
+systemctl status docker
+```
+
+Log out and back in (or reboot) so every terminal gets the new group.
+Run these from the root of the experimentation-platform repository (i.e. here, where this readme is):
+
+```bash
+docker compose -f samples/adaptable-teastore-image/docker-compose.yml up -d
+# Check that the containers are running
+docker compose -f samples/adaptable-teastore-image/docker-compose.yml ps
+```
+
+The first up -d downloads the images, so it can take a few minutes. After that, the services need about a minute to register with each other.
+
+Then, you can run the JavaBip controller (TODO: Update the rest of this readme)
