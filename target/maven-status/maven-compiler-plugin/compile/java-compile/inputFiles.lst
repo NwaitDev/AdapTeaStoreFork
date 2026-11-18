@@ -1,4 +1,3 @@
-/home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore-old/Bridge.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/javabipteastore/SpreadConnector.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/cache/FIFOCache.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/cache/CacheFactory.java
@@ -8,9 +7,7 @@
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/javabipteastore/Client.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/cache/LRUCache.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/javabipteastore/Main.java
-/home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore-old/LRUCache.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/cache/MRUCache.java
-/home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore-old/DataProvider.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/javabipteastore/Looper2.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/cache/ICache.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/javabipteastore/Client3.java
@@ -20,8 +17,6 @@
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/javabipteastore/Server.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/cache/LFUCache.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/Bridge.java
-/home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore-old/PIDController.java
-/home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore-old/CacheUpdater.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/javabipteastore/CollectConnector2.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/cache/AbstractAdapteaStoreCache.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/javabipteastore/TeaStoreWithConnectorGlue.java
@@ -36,11 +31,8 @@
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/PIDController.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/javabipteastore/CollectConnector1.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/javabipteastore/LRUCache.java
-/home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore-old/PersistenceCollector.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/ServiceCollector.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/cache/RRCache.java
-/home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore-old/Main.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/DataProvider.java
-/home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore-old/Glue.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/javabipteastore/CollectConnector.java
 /home/agallone/Documents/Works of others/TeaStoreJavaBIP/src/main/java/adapteastore/CacheUpdater.java

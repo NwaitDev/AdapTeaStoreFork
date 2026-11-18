@@ -10,3 +10,5 @@ build
 *.class
 *.csv
 
+target/JavaBIP-TeaStore-1.0-SNAPSHOT-jar-with-dependencies.jar
+target/JavaBIP-TeaStore-1.0-SNAPSHOT.jar
