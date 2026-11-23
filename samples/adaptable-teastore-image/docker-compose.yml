@@ -115,6 +115,8 @@ services:
       args:
         SIPHONIX: ${SIPHONIX:-./siphonix-app.jar}
     restart: unless-stopped
+    ports:
+      - "8083:8080"
     environment:
       PORT: 8080
       HOST_NAME: "image"
@@ -137,6 +139,8 @@ services:
   persistence:
     image: cerberus237/adaptable-teastore-persistence
     restart: unless-stopped
+    ports:
+      - "8082:8080"
     environment:
       HOST_NAME: "persistence"
       REGISTRY_HOST: "registry"

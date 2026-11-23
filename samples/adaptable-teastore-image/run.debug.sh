@@ -1,11 +1,13 @@
 #!/bin/bash
+set -e
+cd "$(dirname "$0")"
 
 # 1. Récupérer Siphonix (jar, plugin AdaptiFlow, scénarios) s'il est absent
 if [ ! -f ./siphonix-app.jar ] || [ ! -d ./plugins ] || [ ! -d ./scenarios ]; then
     ../../fetch-siphonix.sh || { echo "Erreur : la récupération de Siphonix a échoué." >&2; exit 1; }
 fi
 
-# 3. Build de l'image manuellement (docker compose ... up --build plante à l'étape interne
+# 2. Build de l'image manuellement (docker compose ... up --build plante à l'étape interne
 # "resolving provenance for metadata file" avec ce docker compose (bug connu), alors que le
 # build lui-même reussit toujours. On builde donc avec `docker build` directement, qui n'a
 # pas ce probleme, puis on laisse `up -d` (sans --build) demarrer avec l'image deja construite.
@@ -15,5 +17,10 @@ if ! docker build -f Dockerfile.manager --build-arg SIPHONIX="$SIPHONIX_ARG" -t 
     exit 1
 fi
 
-# 4. Lancement de docker-compose (sans --build, l'image vient d'etre construite ci-dessus)
-docker-compose -f docker-compose.yml -p adaptable-teastore-image up -d
+# 3. Lancement de docker compose (sans --build, l'image vient d'etre construite ci-dessus)
+if docker compose version >/dev/null 2>&1; then
+    COMPOSE="docker compose"
+else
+    COMPOSE="docker-compose"
+fi
+$COMPOSE -f docker-compose.yml -p adaptable-teastore-image up -d

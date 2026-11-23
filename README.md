@@ -53,25 +53,27 @@ python3 src/main/java/javabipteastore/plotMultiple.py \
 
 ### Adapteastore
 
-Start your docker deamon:
+Requirements: a JDK (11+), Maven, Git, curl and a running Docker daemon (`sudo systemctl start docker`).
 
 ```bash
-sudo systemctl start docker
-#sudo systemctl enable docker
-systemctl status docker
+./run-adapteastore.sh                    # set up what is missing, start everything, run the controller
+./run-adapteastore.sh --rebuild          # same, after rebuilding the controller and Siphonix from scratch
+./run-adapteastore.sh --keep-containers  # leave the TeaStore running when the controller stops
 ```
 
-Run these from the root of the experimentation-platform repository (i.e. here, where this readme is):
+The script:
+1. Installs the JavaBIP jars in `~/.m2`, builds the controller and fetches Siphonix (`fetch-siphonix.sh`) if they are missing.
+2. Builds the `image` service with Siphonix and starts the Adaptable TeaStore and the load generator (`samples/adaptable-teastore-image/run.debug.sh`).
+3. Waits until the image service answers on `http://localhost:8083` (the first run downloads the images and can take a few minutes).
+4. Runs `adapteastore.Main`, which polls the image service request count every 2 s and posts the cache size computed by the PID controller.
+
+Stop it with Ctrl+C; the containers are then shut down. The web UI is at http://localhost:8080.
+
+To manage the containers by hand:
 
 ```bash
-docker compose -f samples/adaptable-teastore-image/docker-compose.yml up -d
-# Check that the containers are running
-docker compose -f samples/adaptable-teastore-image/docker-compose.yml ps
-# Turn off the containers
-docker compose -f samples/adaptable-teastore-image/docker-compose.yml down
+docker compose -f samples/adaptable-teastore-image/docker-compose.yml -p adaptable-teastore-image ps
+docker compose -f samples/adaptable-teastore-image/docker-compose.yml -p adaptable-teastore-image logs image
+docker compose -f samples/adaptable-teastore-image/docker-compose.yml -p adaptable-teastore-image down
 ```
-
-The first up -d downloads the images, so it can take a few minutes. After that, the services need about a minute to register with each other.
-
-Then, you can run the JavaBip controller (TODO: Update the rest of this readme)
 

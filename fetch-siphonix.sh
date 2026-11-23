@@ -8,6 +8,10 @@ SIPHONIX_REF="${SIPHONIX_REF:-72051a0}"
 WORK_DIR="$(mktemp -d)"
 trap 'rm -rf "$WORK_DIR"' EXIT
 
+if [ -z "${JAVA_HOME:-}" ] || [ ! -x "$JAVA_HOME/bin/javac" ]; then
+    export JAVA_HOME="$(dirname "$(dirname "$(readlink -f "$(command -v javac)")")")"
+fi
+
 echo "==> Cloning Siphonix ($SIPHONIX_REF)"
 git clone -q "$SIPHONIX_REPO" "$WORK_DIR/siphonix"
 git -C "$WORK_DIR/siphonix" checkout -q "$SIPHONIX_REF"
