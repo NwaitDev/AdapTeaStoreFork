@@ -19,8 +19,8 @@ fi
 
 # 3. Lancement de docker compose (sans --build, l'image vient d'etre construite ci-dessus)
 if docker compose version >/dev/null 2>&1; then
-    COMPOSE="docker compose"
+    COMPOSE=(docker compose)
 else
-    COMPOSE="docker-compose"
+    COMPOSE=(docker-compose)
 fi
-$COMPOSE -f docker-compose.yml -p adaptable-teastore-image up -d
+"${COMPOSE[@]}" -f docker-compose.yml -p adaptable-teastore-image up -d

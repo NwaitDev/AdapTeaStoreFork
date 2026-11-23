@@ -28,11 +28,11 @@ fi
 docker info >/dev/null 2>&1 || { echo "Docker daemon not reachable (try: sudo systemctl start docker)" >&2; exit 1; }
 
 if docker compose version >/dev/null 2>&1; then
-    COMPOSE="docker compose"
+    COMPOSE=(docker compose)
 else
-    COMPOSE="docker-compose"
+    COMPOSE=(docker-compose)
 fi
-COMPOSE_CMD="$COMPOSE -f $SAMPLE_DIR/docker-compose.yml -p adaptable-teastore-image"
+COMPOSE_CMD=("${COMPOSE[@]}" -f "$SAMPLE_DIR/docker-compose.yml" -p adaptable-teastore-image)
 
 cd "$ROOT_DIR"
 
@@ -58,7 +58,7 @@ echo "==> Starting Adaptable TeaStore + Siphonix + load generator"
 cleanup() {
     if ! $KEEP; then
         echo "==> Stopping containers"
-        $COMPOSE_CMD down
+        "${COMPOSE_CMD[@]}" down
     fi
 }
 trap cleanup EXIT
@@ -67,7 +67,7 @@ echo "==> Waiting for the image service ($IMAGE_URL)"
 elapsed=0
 until curl -sf -o /dev/null "$IMAGE_URL"; do
     if [ "$elapsed" -ge "$READY_TIMEOUT_S" ]; then
-        echo "Image service not ready after ${READY_TIMEOUT_S}s. Check: $COMPOSE_CMD logs image" >&2
+        echo "Image service not ready after ${READY_TIMEOUT_S}s. Check: ${COMPOSE_CMD[*]} logs image" >&2
         exit 1
     fi
     sleep 5
