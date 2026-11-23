@@ -55,7 +55,25 @@ fi
 echo "==> Starting Adaptable TeaStore + Siphonix + load generator"
 "$SAMPLE_DIR/run.debug.sh"
 
+OUTPUT_DIR="$ROOT_DIR/output/adapteastore"
+
+save_load_log() {
+    local log_name log_path dest cid
+    log_name="$(grep -E '^OUTPUT_LOG=' "$SAMPLE_DIR/.env" | cut -d= -f2-)"
+    [ -n "$log_name" ] || return 0
+    log_path="$("${COMPOSE_CMD[@]}" exec -T director sh -c "find / -xdev -name '$(basename "$log_name")' -type f 2>/dev/null | head -n 1" | tr -d '\r' || true)"
+    if [ -z "$log_path" ]; then
+        echo "==> No load generator log ($log_name) found in the director container"
+        return 0
+    fi
+    mkdir -p "$OUTPUT_DIR"
+    dest="$OUTPUT_DIR/loadgenerator_$(date +%Y%m%d_%H%M%S)_$(basename "$log_name")"
+    cid="$("${COMPOSE_CMD[@]}" ps -q director)"
+    docker cp "$cid:$log_path" "$dest" >/dev/null && echo "==> Load generator log saved to $dest"
+}
+
 cleanup() {
+    save_load_log || true
     if ! $KEEP; then
         echo "==> Stopping containers"
         "${COMPOSE_CMD[@]}" down

@@ -16,3 +16,4 @@ target/JavaBIP-TeaStore-1.0-SNAPSHOT.jar
 samples/adaptable-teastore-image/siphonix-app.jar
 samples/adaptable-teastore-image/plugins/
 samples/adaptable-teastore-image/scenarios/
+output/

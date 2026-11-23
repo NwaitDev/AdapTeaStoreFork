@@ -69,6 +69,10 @@ The script:
 
 Stop it with Ctrl+C; the containers are then shut down. The web UI is at http://localhost:8080.
 
+Results are written to `output/adapteastore/`:
+- `cache_history_<strategy>_KP<kp>_KI<ki>_KD<kd>_<timestamp>.csv`: one row per controller cycle (`step,capacity,responseTime,misses,hits,request`), readable by `plot.py` and `plotMultiple.py`.
+- `loadgenerator_<timestamp>_testlog.csv`: the load generator log, copied from the `director` container before it stops.
+
 To manage the containers by hand:
 
 ```bash

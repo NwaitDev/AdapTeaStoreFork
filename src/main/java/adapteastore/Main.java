@@ -13,6 +13,10 @@ import org.javabip.api.BIPEngine;
 import org.javabip.api.BIPGlue;
 import org.javabip.engine.factory.EngineFactory;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * Loop of monitoring :
  *   1. GET /image/rest/metrics/requests -> delta of requests since last poll
@@ -53,6 +57,8 @@ public class Main {
     private static final long POLL_INTERVAL_MS = 2_000L;    // timeout between two TeaStore polls
     private static final long CYCLE_TIMEOUT_MS = 10_000L;   // timeout per BIP cycle, has to be superior then DataProvider processing time
 
+    private static final String OUTPUT_DIR = "output/adapteastore";
+
     public static void main(String[] args) throws Exception {
         ActorSystem   system            = ActorSystem.create("system");
         EngineFactory engineFactory     = new EngineFactory(system);
@@ -79,11 +85,16 @@ public class Main {
         engine.execute();
 
         Thread mainThread = Thread.currentThread();
-        Runtime.getRuntime().addShutdownHook(new Thread(mainThread::interrupt));
+        AtomicBoolean running = new AtomicBoolean(true);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            running.set(false);
+            mainThread.interrupt();
+            try { mainThread.join(CYCLE_TIMEOUT_MS); } catch (InterruptedException ignored) {}
+        }));
 
         int iter = 0;
         try {
-            while (true) {
+            while (running.get()) {
                 int delta = imageCollector.get();
                 if (delta > 0) {
                     bridge.update(delta, "TeaStore poll");
@@ -111,9 +122,21 @@ public class Main {
             System.out.println("[Monitor] interrupted");
         } finally {
             System.out.printf("%n=== STOP (iter=%d) ===%n", iter);
+            exportHistory(cache);
             try { engine.stop();                 } catch (Exception ignored3) {}
             try { engineFactory.destroy(engine); } catch (Exception ignored3) {}
             try { system.terminate();            } catch (Exception ignored3) {}
+        }
+    }
+
+    private static void exportHistory(SwitchableCache cache) {
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        String path = String.format("%s/cache_history_%s_KP%s_KI%s_KD%s_%s.csv",
+                OUTPUT_DIR, DEFAULT_CACHE_STRATEGY, KP, KI, KD, timestamp);
+        try {
+            cache.exportHistoryCsv(path);
+        } catch (Exception e) {
+            System.err.println("[Monitor] CSV export failed: " + e.getMessage());
         }
     }
 }
