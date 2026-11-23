@@ -54,11 +54,10 @@ Start your docker deamon:
 
 ```bash
 sudo systemctl start docker
-sudo systemctl enable docker
+#sudo systemctl enable docker
 systemctl status docker
 ```
 
-Log out and back in (or reboot) so every terminal gets the new group.
 Run these from the root of the experimentation-platform repository (i.e. here, where this readme is):
 
 ```bash
